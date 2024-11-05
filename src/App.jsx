@@ -1,24 +1,39 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import ListRecipes from './Components/Recipes/ListRecipes'
-import 'primereact/resources/themes/saga-blue/theme.css';
-import 'primereact/resources/primereact.min.css';
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom'; // Solo importa Routes y Route
+import Navbar from './components/Navbar/Navbar';
+import Paquetes from './components/Paquetes/Paquetes';
+import Reservas from './components/Reservas/Reservas';
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
+import AdminRequests from './components/Admin/AdminRequests';
+import Home from './components/Home/Home';
+import Users from './components/Users/UsersList';
+import Destinos from './components/Destinos/Destinos';
+import Pagos from './components/Pagos/Pagos';
+import './index.css';
 
 function App() {
+  const [paquetes, setPaquetes] = useState([
+    { id: 1, nombre: 'Paquete Familiar', descripcion: 'Viaje para toda la familia', destino: 'Buenos Aires', precio: 5000 },
+    { id: 2, nombre: 'Aventura en la Montaña', descripcion: 'Para los amantes de la aventura', destino: 'Córdoba', precio: 3000 }
+  ]);
+
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <ListRecipes />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/paquetes" element={<Paquetes paquetes={paquetes} setPaquetes={setPaquetes} />} />
+        <Route path="/reservas" element={<Reservas paquetes={paquetes} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/admin-requests" element={<AdminRequests />} />
+        <Route path="/usuarios" element={<Users />} /> 
+        <Route path="/destinos" element={<Destinos />} /> 
+        <Route path="/pagos/:id" element={<Pagos />} />    
+      </Routes> 
     </>
-  )
+  );
 }
 
-export default App
+export default App;
